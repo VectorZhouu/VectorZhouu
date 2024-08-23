@@ -12,6 +12,8 @@ You can click the Preview link to take a look at your changes.
 --->
 
 ```c
+#include <stdio.h>
+#include <stdlib.h>
 int main()
 {
   printf("HelooWorld");
