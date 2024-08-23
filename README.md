@@ -10,3 +10,18 @@
 VectorZhouu/VectorZhouu is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 You can click the Preview link to take a look at your changes.
 --->
+
+```c
+int main()
+{
+  printf("HelooWorld");
+}
+```
+```py
+from manim import *
+class Sample(Scene):
+  def construct(self):
+    a = Tex("HelloWorld")
+    self.play(Write(a))
+    self.play(FadeOut(a))
+```
