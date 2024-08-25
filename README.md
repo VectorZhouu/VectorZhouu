@@ -35,9 +35,28 @@ import numpy as np
 #not callabal的解决方法(Write方法只能用于一个对象)
 #用clear_updaters()来取消always_redraw
 
+class mob(Scene):
+    def construct(self):
+        func = lambda pos: np.sin(pos[1])*RIGHT+np.cos(pos[0])*UP  
+        mob = ArrowVectorField(func)  
+        self.play(Write(mob))
+        
+        self.wait()
+        self.play(Unwrite(mob))
+
+        func2 = lambda pos: ((pos[0]*UR+pos[1]*LEFT) - pos)  
+        mob2= StreamLines(func2,x_range=[-5,5,1], y_range=[-5,5,1],stroke_width=3)  
+        self.play(Write(mob2))
+        self.wait() 
+        self.play(Unwrite(mob2))
+
+
 class final(Scene):
     def construct(self):
         #self.add(NumberPlane())
+        olach = Text("欧拉恒等式",font = "STXingkai",weight=BOLD).set_color_by_gradient("#f6d365","#fda085")
+        olaen = Text("Euler's identity",slant=ITALIC).set_color_by_gradient("#43e97b","#38f9d7")
+        grola = VGroup(olach,olaen)
         ola = MathTex(r"e^{\pi i}",
                       r" + 1 = 0").scale(3)
         t1 = MathTex(r"0",
@@ -59,10 +78,15 @@ class final(Scene):
         t1[1].move_to([3.5,0,0]).scale(2.5)
         t2[0].move_to([-3.5,0,0]).scale(10)
         t2[1].move_to([3.5,0,0]).scale(10)
+        self.play(Write(olach))
+        self.play(olach.animate.move_to([0,2.5,0]))
+        grola.arrange(DOWN,buff = 0.5,center=False)
+        self.play(Write(olaen))
         self.play(Write(ola),run_time = 2)
+        self.play(Circumscribe(ola))
         self.play(Indicate(ola[0],1.2,ORANGE))
         self.play(ola[0].animate.set_color(TEAL))
-        self.play(FadeOut(ola))
+        self.play(FadeOut(ola,grola))
         self.play(FadeIn(t1[0],t2[0]))
         self.play(FadeIn(t1[1],t2[1]))
         self.play(Indicate(t1[0],1.5,ORANGE))
@@ -115,7 +139,15 @@ class final(Scene):
         self.play(FadeOut(line,line2),ReplacementTransform(i3,i4))
         self.wait()
         self.play(FadeOut(i1,i4))
+        cpten = Text("Complex").set_color_by_gradient("#fa709a","#fee140")
+        cptch = Text("复平面").set_color_by_gradient("#fddb92","#d1fdff")
+        self.play(Write(cptch))
+        self.play(cptch.animate.move_to([0,2,0]))
+        grcp = VGroup(cptch,cpten)
+        grcp.arrange(DOWN,buff = 0.5,center=False)
+        self.play(Write(cpten))
         self.wait()
+        self.play(FadeOut(grcp))
         cp = ComplexPlane().add_coordinates()
         vt = ValueTracker(0)
         vt2= ValueTracker(0)
@@ -132,7 +164,14 @@ class final(Scene):
         arr2 = always_redraw(lambda: Arrow(ORIGIN,cp.n2p(-2+1j),buff = 0).set_color(BLUE_E))
         #arr3 = always_redraw(lambda: Arrow(ORIGIN,cp.n2p(-1+3j),buff = 0).set_color(GREEN))
         vg = VGroup(dl,dl2,lab2,arr1,arr2)
-        self.play(Write(cp))
+        vecch = Text("向量").set_color_by_gradient(GREEN,BLUE)
+        vecen = Text("Vector").set_color_by_gradient(YELLOW,ORANGE)
+        vecgr = VGroup(vecch,vecen)
+        self.play(Write(cp),Write(vecch))
+        self.play(vecch.animate.move_to([0,2,0]))
+        vecgr.arrange(DOWN,buff = 0.5,center=False)
+        self.play(Write(vecen))
+        self.play(FadeOut(vecgr))
         self.play(Write(vg),Write(lab))
         self.wait()
         self.play(cp.animate.scale(1.25))
@@ -201,14 +240,50 @@ class final(Scene):
         self.wait()
         npl = NumberPlane()
         k = ValueTracker(1)
-        num1 = always_redraw(lambda: DecimalNumber(k.get_value(),num_decimal_places=0)).move_to([-4,3,0])
+        fuen = Text("Exponential function").set_color_by_gradient("#d4fc79","#96e6a1")
+        fuch = Text("指数函数").set_color_by_gradient("#84fab0","#8fd3f4")
+        fugr = VGroup(fuch,fuen)
+        num1 = always_redraw(lambda: DecimalNumber(k.get_value(),num_decimal_places=0).move_to([-4,3,0]))
         func = lambda x:  k.get_value() * np.exp(x)
         gra1 = always_redraw(lambda: npl.plot(func,color = GREEN))
-        self.play(Write(npl),FadeOut(gr3))
+        self.play(FadeOut(gr3))
+        self.play(Write(fuch))
+        self.play(fuch.animate.move_to([0,2,0]))
+        fugr.arrange(DOWN,buff = 0.5,center=False)
+        self.play(Write(fuen))
+        self.play(FadeOut(fugr))
+        self.play(Write(npl))
         self.play(Write(gra1))
         self.play(Write(num1))
         self.play(k.animate.set_value(5),run_time = 3)
         self.play(k.animate.set_value(-10),run_time = 3.8)
         self.wait()
+        self.play(FadeOut(num1,gra1,npl,e2))
+
+        # pi
+        pi1 = MathTex(r"\pi").set_color(GREEN).scale(2.5)
+        pi2 = MathTex(r"\pi").set_opacity(0.1).scale(10)
+        self.play(Write(pi1),FadeIn(pi2))
+        self.play(pi1.animate.to_edge(UL,buff = 1))
+        whatpi = Paragraph(
+            "What is the π?",
+            "什么是π?"
+        ).set_color_by_gradient("#96fbc4","#f9f586")
+        self.play(Write(whatpi))
+        self.play(FadeOut(whatpi))
+        #c = Circle(radius=1,color = "#ff1eb",fill_opacity = 1)
+        c = Circle(stroke_width=2,radius=1,fill_opacity = 1).set_color_by_gradient("#fff1eb","#ace0f9")
+        self.play(GrowFromCenter(c))
+        self.wait()
+        s = Text("S = πr²").set_color_by_gradient("#c1dfc4","#deecdd")
+        #s = Text(r"S = πr²").set_color_by_gradient(ORANGE,YELLOW)
+        cc= Text("C = 2πr").set_color_by_gradient("#74ebd5","#9face6")
+        sc = VGroup(s,cc)
+        sc.arrange(DOWN,buff = 0.5,center=False).move_to([-3.5,0,0])
+        #c.set_fill_opacity(0.1)
+        r = Line([0,0,0],[1,0,0],buff = 0,color = RED)
+        self.play(Write(r))
+        self.play(Write(sc))
+
 ```
 And i am developing this to improve my manim animation skills
