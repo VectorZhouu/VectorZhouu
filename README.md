@@ -34,39 +34,20 @@ import numpy as np
 
 #not callabal的解决方法(Write方法只能用于一个对象)
 #用clear_updaters()来取消always_redraw
-
-class mob(Scene):
-    def construct(self):
-        func = lambda pos: np.sin(pos[1])*RIGHT+np.cos(pos[0])*UP  
-        mob = ArrowVectorField(func)  
-        self.play(Write(mob))
-        
-        self.wait()
-        self.play(Unwrite(mob))
-
-        func2 = lambda pos: ((pos[0]*UR+pos[1]*LEFT) - pos)  
-        mob2= StreamLines(func2,x_range=[-5,5,1], y_range=[-5,5,1],stroke_width=3)  
-        self.play(Write(mob2))
-        self.wait() 
-        self.play(Unwrite(mob2))
-
+#class test用以快速测试函数
+#valuetracker报错请用get_value()来取值
 
 class final(Scene):
     def construct(self):
         #self.add(NumberPlane())
-        olach = Text("欧拉恒等式",font = "STXingkai",weight=BOLD).set_color_by_gradient("#f6d365","#fda085")
+        #shuiyin = Tex(r"17d615c").set_opacity(0.01).scale(2.54).to_edge(UL,buff = 0.5)
+        olach = Text("欧拉恒等式",weight=BOLD).set_color_by_gradient("#f6d365","#fda085")
         olaen = Text("Euler's identity",slant=ITALIC).set_color_by_gradient("#43e97b","#38f9d7")
         grola = VGroup(olach,olaen)
-        ola = MathTex(r"e^{\pi i}",
-                      r" + 1 = 0").scale(3)
-        t1 = MathTex(r"0",
-                     r"1")
-        t2 = MathTex(r"0",
-                     r"1")
-        t3 = MathTex(r" +1",
-                     r" +1",
-                     r" +1",
-                     r" -5").set_color(RED).scale(2.23)
+        ola = MathTex(r"e^{\pi i}",r" + 1 = 0").scale(3)
+        t1 = MathTex(r"0",r"1")
+        t2 = MathTex(r"0",r"1")
+        t3 = MathTex(r" +1",r" +1",r" +1",r" -5").set_color(RED).scale(2.23)
         t2[0].set_opacity(0.1)
         t2[1].set_opacity(0.1)
         nl = NumberLine(include_numbers=True,color = BLUE)
@@ -115,14 +96,10 @@ class final(Scene):
         # i
         i1 = MathTex(r"i").scale(2.5)
         i2 = MathTex(r"i").scale(10).set_opacity(0.1)
-        i3 = MathTex(r"i",
-                     r" = ",
-                     r"\sqrt{-1} ").scale(2.5)
+        i3 = MathTex(r"i",r" = ",r"\sqrt{-1} ").scale(2.5)
         i3[0].set_color(YELLOW)
         i3[2].set_color(ORANGE)
-        i4 = MathTex(r"i ^ 2",
-                     r"=",
-                     r"-1").scale(2.5)
+        i4 = MathTex(r"i ^ 2",r"=",r"-1").scale(2.5)
         i4[0].set_color(YELLOW)
         i4[2].set_color(ORANGE)
         self.play(FadeIn(i2),Write(i1))
@@ -175,17 +152,9 @@ class final(Scene):
         self.play(Write(vg),Write(lab))
         self.wait()
         self.play(cp.animate.scale(1.25))
-        t4 = Tex(r"$(1+2i)$",
-                 "+",
-                 r"$(-2+i)$")
-        t5 = Tex("="
-                 r"$(1-2)$",
-                 "+",
-                 r"$(2i-i)$")
-        t6 = Tex("="
-                 r"$-1$",
-                 "+",
-                 r"$3i$")
+        t4 = Tex(r"$(1+2i)$","+",r"$(-2+i)$")
+        t5 = Tex("=",r"$(1-2)$","+",r"$(2i-i)$")
+        t6 = Tex("=",r"$-1$","+",r"$3i$")
         t4.set_color_by_tex("(1+2i)",ORANGE)
         t4.set_color_by_tex("(-2+i)",GREEN)
         t5.set_color_by_tex("(1-2)",ORANGE)
@@ -214,8 +183,7 @@ class final(Scene):
         # e
         e1 = MathTex(r"e").scale(2.5).set_color(TEAL)
         e2 = MathTex(r"e").scale(10).set_opacity(0.1)
-        e3 = MathTex(r"e",
-                 r"= \lim_{ n \to \infty} \left ( 1 + \frac{1}{n}  \right )^n ")
+        e3 = MathTex(r"e",r"= \lim_{ n \to \infty} \left ( 1 + \frac{1}{n}  \right )^n ")
         e4 = MathTex(r" ({e ^x})'= e ^x ")
         #e5 = MathTex(r"f(x)="
         #             r"k"
@@ -246,6 +214,7 @@ class final(Scene):
         num1 = always_redraw(lambda: DecimalNumber(k.get_value(),num_decimal_places=0).move_to([-4,3,0]))
         func = lambda x:  k.get_value() * np.exp(x)
         gra1 = always_redraw(lambda: npl.plot(func,color = GREEN))
+        #dot1 = Dot(gra1.get_start())
         self.play(FadeOut(gr3))
         self.play(Write(fuch))
         self.play(fuch.animate.move_to([0,2,0]))
@@ -255,35 +224,133 @@ class final(Scene):
         self.play(Write(npl))
         self.play(Write(gra1))
         self.play(Write(num1))
+        #self.play(MoveAlongPath(dot1, gra1), run_time=5)
         self.play(k.animate.set_value(5),run_time = 3)
         self.play(k.animate.set_value(-10),run_time = 3.8)
         self.wait()
         self.play(FadeOut(num1,gra1,npl,e2))
 
         # pi
+        achien = Paragraph("Dont disturb my circles (Archimedes probably said:",
+                       " Noli turbare circulos meos!)").set_color_by_gradient(GREEN,BLUE)
+        achich = Text(r"别碰我的圆!!!").set_color_by_gradient(GREEN,BLUE).scale(0.9)
+        achen  = Tex(r"----Archimedes").set_color_by_gradient(GREEN,BLUE).scale(1.5)
+        achch  = Text(r"--阿基米德").set_color_by_gradient(GREEN,BLUE).scale(0.9)
+        achien.to_edge(UP,buff = 0.4)
+        achen.next_to(achien,DR,buff = 0.15)
+        achengr = VGroup(achien,achen)
+        achich.next_to(achengr,DOWN,buff = 0.5)
+        achch.next_to(achich,DR,buff = 0.15)
+        achchgr = VGroup(achich,achch)
+        achgr = VGroup(achengr,achchgr).scale(0.65).arrange(DOWN,center=False).to_edge(UL,buff = 1)
+
         pi1 = MathTex(r"\pi").set_color(GREEN).scale(2.5)
         pi2 = MathTex(r"\pi").set_opacity(0.1).scale(10)
         self.play(Write(pi1),FadeIn(pi2))
-        self.play(pi1.animate.to_edge(UL,buff = 1))
-        whatpi = Paragraph(
-            "What is the π?",
-            "什么是π?"
-        ).set_color_by_gradient("#96fbc4","#f9f586")
-        self.play(Write(whatpi))
+        self.play(Write(achgr),pi1.animate.to_edge(DOWN,buff = 0.5))
+        self.play(ApplyWave(pi1))
+        self.wait()
+        self.play(FadeOut(achgr),pi1.animate.to_edge(UL,buff = 1))
+        #whatpi = Paragraph(
+        #    "What is the π?",
+        #    "什么是π?"
+        #).set_color_by_gradient("#96fbc4","#f9f586")
+        whatpien = Tex(r"$What \ is \ the \ \pi ?$").set_color_by_gradient(("#96fbc4","#f9f586")).scale(1.21)
+        what  = Text("什么是").set_color_by_gradient("#96fbc4","#f9f586")
+        pi = Tex(r"$ \pi ? $").set_color("#f9f586").scale(2)
+        whatpich = VGroup(what,pi)
+        whatpich.arrange(RIGHT).scale(0.9)
+        whatpi = VGroup(whatpien,whatpich)
+        whatpi.arrange(DOWN,buff = 0.5)
+        
+        self.play(Write(whatpi),ApplyWave(pi1))
         self.play(FadeOut(whatpi))
         #c = Circle(radius=1,color = "#ff1eb",fill_opacity = 1)
-        c = Circle(stroke_width=2,radius=1,fill_opacity = 1).set_color_by_gradient("#fff1eb","#ace0f9")
-        self.play(GrowFromCenter(c))
+        dl4 = Dot([0,0,0],color=RED)
+        c = Circle(stroke_width=2,radius=2,fill_opacity = 0.1).set_color_by_gradient("#fff1eb","#ace0f9")
+        self.play(GrowFromCenter(c),FadeOut(pi1))
         self.wait()
-        s = Text("S = πr²").set_color_by_gradient("#c1dfc4","#deecdd")
+        #s = Text("S = πr²").set_color_by_gradient("#c1dfc4","#deecdd")
         #s = Text(r"S = πr²").set_color_by_gradient(ORANGE,YELLOW)
-        cc= Text("C = 2πr").set_color_by_gradient("#74ebd5","#9face6")
+        #cc= Text("C = 2πr").set_color_by_gradient("#74ebd5","#9face6")
+        s = Tex(r"$S = \pi r^2$").set_color_by_gradient("#c1dfc4","#deecdd")
+        cc= Tex(r"$C = 2 \pi r$").set_color_by_gradient("#74ebd5","#9face6")
         sc = VGroup(s,cc)
         sc.arrange(DOWN,buff = 0.5,center=False).move_to([-3.5,0,0])
         #c.set_fill_opacity(0.1)
-        r = Line([0,0,0],[1,0,0],buff = 0,color = RED)
-        self.play(Write(r))
+        r = DashedLine([0,0,0],[2,0,0],buff = 0,color = RED,stroke_width = 3)
+        rten = Tex(r"radius").set_color(ORANGE).scale(1.21)
+        rtch = Text("半径").set_color(ORANGE).scale(0.9)
+        rt = VGroup(rten,rtch).scale(0.9)
+        rt.arrange(DOWN,buff = 0.5).next_to(r,UP,buff = 0.5)
+        self.play(Write(r),Write(dl4),Write(rt))
         self.play(Write(sc))
+        circ = VGroup(c,dl4,r,rt)
+        self.play(Rotate(circ,angle=2*PI))
+        self.wait()
+        self.play(FadeOut(rt,dl4,r,sc))
+        cp.scale(0.8)
+        unitch = Text(r"复平面上的单位圆").set_color_by_gradient("#0dcda4","#c2fcd4")
+        unit = Text("A unit circle on a complex plane").set_color_by_gradient("#0dcda4","#c2fcd4")
+        self.play(FadeOut(c),Write(unit))
+        self.play(FadeOut(unit),GrowFromCenter(c))
+        self.play(c.animate.scale(0.5),Write(cp))
+        cpc = VGroup(cp,c)
+        self.play(cpc.animate.scale(3))
+        ori = Dot(cp.n2p(0),color=TEAL)
 
+        #cvt1 = ComplexValueTracker()
+        #vt1 = ValueTracker(0)
+        theta = ValueTracker(0)
+        #cosx = always_redraw(lambda: np.cos(theta.get_value()))
+        #sinx = always_redraw(lambda: np.sin(theta.get_value()))
+        #vt2.set_value(0)
+        arr4 = always_redraw(lambda: Arrow(cp.n2p(0),cp.n2p(np.cos(theta.get_value()) + np.sin(theta.get_value()) * 1j),buff = 0,color = ORANGE))
+        arrcos=always_redraw(lambda: Arrow(cp.n2p(0),cp.n2p(np.cos(theta.get_value())),buff = 0,color = BLUE))
+        arrsin=always_redraw(lambda: Arrow(cp.n2p(np.cos(theta.get_value())),cp.n2p(np.cos(theta.get_value()) + np.sin(theta.get_value()) * 1j),buff = 0,color =GREEN))
+        tcos = always_redraw(lambda: MathTex(r" \cos \left ( \theta  \right ) ").next_to(arrcos,DOWN,buff = 0.25))
+        tsin = always_redraw(lambda: MathTex(r" \sin \left ( \theta  \right ) ").next_to(arrsin,RIGHT,buff = 0.25))
+        tvec =always_redraw(lambda: MathTex(r" \cos \left ( \theta  \right ) + i\sin \left ( \theta  \right ) "))
+        self.play(Write(arr4),Write(arrcos),Write(arrsin),Write(tcos),Write(tsin))
+        self.play(theta.animate.set_value(120 * DEGREES),run_time = 2)
+        self.wait()
+        self.play(theta.animate.set_value(-45 * DEGREES),run_time = 2)
+        
+    
+        #vt2.set_value(0)
+        #cvt1 = ComplexValueTracker()
+        #cvt1.set_value(vt1.get_value() + vt2.get_value()*1j)
+        #arr4 = always_redraw(lambda: Arrow(cp.n2p(0),cp.n2p(cvt1.get_value()))).set_color(ORANGE)
+        #self.play(Write(arr4))
+        #self.play(theta.animate.set_value(100 * DEGREES))
+        #self.play(vt1.animate.set_value(np.cos(theta)),vt2.animate.set_value(np.sin(theta)))
+        
+
+
+
+
+        #重新用vt的valuetracker
+        #vt.set_value(0)
+        #a = Angle(m , mm, radius=0.5, other_angle=False)
+        #m = Line(cp.n2p(0),cp.n2p(1),buff = 0)
+        #mm= Line(cp.n2p(0),cp.n2p(1),buff=0)
+        #self.play(Write(m),Write(mm))
+        #self.play(vt.animate.set_value(120))
+        #a.add_updater(
+        #    lambda x: x.become(Angle(m,mm, radius=0.5, other_angle=False))
+        #)
+        #self.play(mm.animate.rotate(vt.get_value()*DEGREES,about_point=cp.n2p(0)))
+        #k.set_value(0)
+        #vt5 = ValueTracker(0)
+        #sinx = always_redraw(lambda: np.sin(vt5))
+        #cosx = always_redraw(lambda: np.cos(vt5))
+        #gra2 = Line(ORIGIN,cp.n2p(cosx + sinx * 1j))
+        #self.play(Write(ori),Write(gra2))
+        #self.play(k.animate.set_value(7))
+        self.wait()
+
+
+
+        #self.play(FadeOut(shuiyin))
 ```
 And i am developing this to improve my manim animation skills
