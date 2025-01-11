@@ -2,10 +2,13 @@
 - 👀 I’m interested in Math,CS
 - 🌱 I’m currently learning Math,CS
 
+
+
+![Typing SVG](https://readme-typing-svg.demolab.com/?lines=What+I+am+deving?+Might+about+these+things:;Math;Computer+Science;Computer+Vision;Python+Game;Android+Studio)
+<br>
 ![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=VectorZhouu&show_icons=true&theme=holi)
 <br>
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=VectorZhouu&layout=compact)](https://github.com/anuraghazra/github-readme-stats)
-<br>
+![GitHub Streak](https://streak-stats.demolab.com/?user=VectorZhouu)
 <!---
 VectorZhouu/VectorZhouu is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 You can click the Preview link to take a look at your changes.
@@ -354,3 +357,8 @@ class final(Scene):
         #self.play(FadeOut(shuiyin))
 ```
 And i am developing this to improve my manim animation skills
+<br>
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=VectorZhouu&layout=compact)](https://github.com/anuraghazra/github-readme-stats)
+<br>
+![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=VectorZhouu)
+
