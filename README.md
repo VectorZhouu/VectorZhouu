@@ -363,6 +363,5 @@ And i am developing this to improve my manim animation skills
 ![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=VectorZhouu)
 <br>
 ![暗色](https://raw.githubusercontent.com/VectorZhouu/VectorZhouu/output/github-contribution-grid-snake-dark.svg)
-![亮色](https://raw.githubusercontent.com/VectorZhouu/VectorZhouu/output/github-contribution-grid-snake.svg)
 
 
