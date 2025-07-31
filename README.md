@@ -31,7 +31,7 @@ class Sample(Scene):
     self.play(Write(a))
     self.play(FadeOut(a))
 ```
-The Project that I dev Now:I'm imitating 漫士启示录's video
+The Project that I dev Now:I'm imitating 漫士启示录's video(Run on ManimCommunityEdition)
 ```py
 from manim import *
 import numpy as np
