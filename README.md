@@ -7,6 +7,10 @@
 
 
 
+
+
+
+
 ![Typing SVG](https://readme-typing-svg.demolab.com/?lines=What+I+am+deving?+Might+about+these+things:;Math;Computer+Science;Computer+Vision;Python+Game;Android+Studio)
 <br>
 ![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=VectorZhouu&show_icons=true&theme=holi)
