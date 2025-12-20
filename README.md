@@ -38,16 +38,21 @@ The Project that I dev Now:I'm imitating 漫士启示录's video(Run on ManimCom
 ```py
 from manim import *
 import numpy as np
+import math
 
 #not callabal的解决方法(Write方法只能用于一个对象)
 #用clear_updaters()来取消always_redraw
 #class test用以快速测试函数
 #valuetracker报错请用get_value()来取值
+#numberplane用c2p(a.b) complexplane和numberplane用n2p(m)来确定
+#math.floor()可以取整(向下),好好利用math和numpy库,用chatglm来解决问题
 
 class final(Scene):
     def construct(self):
+        #self.add_sound("F:\pro\music\lonely.mp3")
         #self.add(NumberPlane())
         #shuiyin = Tex(r"17d615c").set_opacity(0.01).scale(2.54).to_edge(UL,buff = 0.5)
+        npl = NumberPlane()
         olach = Text("欧拉恒等式",weight=BOLD).set_color_by_gradient("#f6d365","#fda085")
         olaen = Text("Euler's identity",slant=ITALIC).set_color_by_gradient("#43e97b","#38f9d7")
         grola = VGroup(olach,olaen)
@@ -96,8 +101,19 @@ class final(Scene):
         self.wait()
         self.play(num.animate.set_value(-2),Write(t3[3]))
         self.wait()
-        gr1 = VGroup(nl,t3,t2,arrow,dot)
-        self.play(FadeOut(gr1))
+        self.play(FadeOut(arrow,t3))
+        arr5 = Arrow(npl.c2p(0.125,3),nl.n2p(0),color = TEAL).set_opacity(0.45)
+        self.play(Write(arr5))
+        #self.play(nl.animate.move_to(nl.n2p(1)),Write(t3[0]))
+        #self.play(nl.animate.move_to(nl.n2p(2)),Write(t3[1]))
+        #self.play(nl.animate.move_to(nl.n2p(3)),Write(t3[2]))
+        #self.play(nl.animate.move_to(nl.n2p(-2)),Write(t3[3]))
+        self.play(nl.animate.shift(RIGHT * 2),Write(t3[0]))
+        self.play(nl.animate.shift(RIGHT * 2),Write(t3[1]))
+        self.play(nl.animate.shift(RIGHT * 2),Write(t3[2]))
+        self.play(nl.animate.shift(LEFT * 10),Write(t3[3]))
+        self.wait()
+        self.play(FadeOut(nl,t3,dot,arr5,t2))
         self.wait()
 
         # i
@@ -133,6 +149,7 @@ class final(Scene):
         self.wait()
         self.play(FadeOut(grcp))
         cp = ComplexPlane().add_coordinates()
+        cpy= ComplexPlane().add_coordinates()
         vt = ValueTracker(0)
         vt2= ValueTracker(0)
         vt3= ValueTracker(1)
@@ -213,7 +230,6 @@ class final(Scene):
         #self.play(e4.animate.to_edge(UR,buff = 1).scale(0.7))
         #self.play(Indicate(e4,1.4,YELLOW))
         self.wait()
-        npl = NumberPlane()
         k = ValueTracker(1)
         fuen = Text("Exponential function").set_color_by_gradient("#d4fc79","#96e6a1")
         fuch = Text("指数函数").set_color_by_gradient("#84fab0","#8fd3f4")
@@ -298,7 +314,9 @@ class final(Scene):
         self.play(FadeOut(rt,dl4,r,sc))
         cp.scale(0.8)
         unitch = Text(r"复平面上的单位圆").set_color_by_gradient("#0dcda4","#c2fcd4")
-        unit = Text("A unit circle on a complex plane").set_color_by_gradient("#0dcda4","#c2fcd4")
+        uniten = Text("A unit circle on a complex plane").set_color_by_gradient("#0dcda4","#c2fcd4")
+        unit = VGroup(uniten,unitch)
+        unit.arrange(DOWN,buff = 0.5).move_to(cp.n2p(0))
         self.play(FadeOut(c),Write(unit))
         self.play(FadeOut(unit),GrowFromCenter(c))
         self.play(c.animate.scale(0.5),Write(cp))
@@ -315,15 +333,58 @@ class final(Scene):
         arr4 = always_redraw(lambda: Arrow(cp.n2p(0),cp.n2p(np.cos(theta.get_value()) + np.sin(theta.get_value()) * 1j),buff = 0,color = ORANGE))
         arrcos=always_redraw(lambda: Arrow(cp.n2p(0),cp.n2p(np.cos(theta.get_value())),buff = 0,color = BLUE))
         arrsin=always_redraw(lambda: Arrow(cp.n2p(np.cos(theta.get_value())),cp.n2p(np.cos(theta.get_value()) + np.sin(theta.get_value()) * 1j),buff = 0,color =GREEN))
-        tcos = always_redraw(lambda: MathTex(r" \cos \left ( \theta  \right ) ").next_to(arrcos,DOWN,buff = 0.25))
-        tsin = always_redraw(lambda: MathTex(r" \sin \left ( \theta  \right ) ").next_to(arrsin,RIGHT,buff = 0.25))
-        tvec =always_redraw(lambda: MathTex(r" \cos \left ( \theta  \right ) + i\sin \left ( \theta  \right ) "))
-        self.play(Write(arr4),Write(arrcos),Write(arrsin),Write(tcos),Write(tsin))
+        tcos = always_redraw(lambda: Tex(r" $\cos \left ( \theta  \right )$").set_color_by_gradient(BLUE,BLUE_B).next_to(arrcos,DOWN,buff = 0.25))
+        tsin = always_redraw(lambda: Tex(r" $\sin \left ( \theta  \right )$").set_color_by_gradient(GREEN,GREEN_B).next_to(arrsin,RIGHT,buff = 0.25))
+        tvec =always_redraw(lambda: Tex(r" $\cos \left ( \theta  \right ) + i\sin \left ( \theta  \right )$ ").set_color_by_gradient(ORANGE,RED).move_to(cp.n2p(np.cos(theta.get_value()) + np.sin(theta.get_value()) * 1j)))
+        self.play(Write(tvec),Write(arr4),Write(arrcos),Write(arrsin),Write(tcos),Write(tsin))
+        
         self.play(theta.animate.set_value(120 * DEGREES),run_time = 2)
         self.wait()
         self.play(theta.animate.set_value(-45 * DEGREES),run_time = 2)
+        sincos = Tex(r"$sin^2 \theta $",r"+",r"$cos^2 \theta $ = 1")
+        sincos[0].set_color(GREEN)
+        sincos[2].set_color(BLUE)
+        sincos.move_to([-4,-1,0])
+        self.play(Write(sincos))
+        self.wait()
+        self.play(FadeOut(sincos))
         
-    
+        po4 = RegularPolygon(n = 4).move_to(cp.n2p(0)).scale(3)
+        po5 = RegularPolygon(n = 5).move_to(cp.n2p(0)).scale(3)
+        po6 = RegularPolygon(n = 6).move_to(cp.n2p(0)).scale(3)
+        po7 = RegularPolygon(n = 7).move_to(cp.n2p(0)).scale(3)
+        po8 = RegularPolygon(n = 8).move_to(cp.n2p(0)).scale(3)
+        po9 = RegularPolygon(n = 9).move_to(cp.n2p(0)).scale(3)
+        po0 = RegularPolygon(n = 10).move_to(cp.n2p(0)).scale(3)
+        po1 = RegularPolygon(n = 11).move_to(cp.n2p(0)).scale(3)
+        po2 = RegularPolygon(n = 12).move_to(cp.n2p(0)).scale(3)
+        po3 = RegularPolygon(n = 13).move_to(cp.n2p(0)).scale(3)
+        po14 = RegularPolygon(n = 14).move_to(cp.n2p(0)).scale(3)
+        po15 = RegularPolygon(n = 15).move_to(cp.n2p(0)).scale(3)
+        po16 = RegularPolygon(n = 16).move_to(cp.n2p(0)).scale(3)
+        po17 = RegularPolygon(n = 17).move_to(cp.n2p(0)).scale(3)
+        po18 = RegularPolygon(n = 18).move_to(cp.n2p(0)).scale(3)
+        
+        self.play(Write(po4))
+        self.play(TransformMatchingShapes(po4,po5))
+        self.play(TransformMatchingShapes(po5,po6))
+        self.play(TransformMatchingShapes(po6,po7))
+        self.play(TransformMatchingShapes(po7,po8))
+        self.play(TransformMatchingShapes(po8,po9))
+        self.play(TransformMatchingShapes(po9,po0))
+        self.play(TransformMatchingShapes(po0,po1))
+        self.play(TransformMatchingShapes(po1,po2))
+        self.play(TransformMatchingShapes(po2,po3))
+        self.play(TransformMatchingShapes(po3,po14))
+        self.play(TransformMatchingShapes(po14,po15))
+        self.play(TransformMatchingShapes(po15,po16))
+        self.play(TransformMatchingShapes(po16,po17))
+        self.play(TransformMatchingShapes(po17,po18))
+        self.wait()
+
+
+
+        #self.play(k.animate.set_value(15),run_time = 6,rate_func=linear)
         #vt2.set_value(0)
         #cvt1 = ComplexValueTracker()
         #cvt1.set_value(vt1.get_value() + vt2.get_value()*1j)
@@ -331,11 +392,6 @@ class final(Scene):
         #self.play(Write(arr4))
         #self.play(theta.animate.set_value(100 * DEGREES))
         #self.play(vt1.animate.set_value(np.cos(theta)),vt2.animate.set_value(np.sin(theta)))
-        
-
-
-
-
         #重新用vt的valuetracker
         #vt.set_value(0)
         #a = Angle(m , mm, radius=0.5, other_angle=False)
@@ -354,10 +410,6 @@ class final(Scene):
         #gra2 = Line(ORIGIN,cp.n2p(cosx + sinx * 1j))
         #self.play(Write(ori),Write(gra2))
         #self.play(k.animate.set_value(7))
-        self.wait()
-
-
-
         #self.play(FadeOut(shuiyin))
 ```
 And i am developing this to improve my manim animation skills
