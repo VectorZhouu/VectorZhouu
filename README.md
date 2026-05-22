@@ -1,6 +1,6 @@
 - 👋 Hi, I’m VectorZhouu
-- 👀 I’m interested in Math,CS
-- 🌱 I’m currently learning Math,CS
+
+
 
 
 
