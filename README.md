@@ -412,9 +412,6 @@ class final(Scene):
         #self.play(FadeOut(shuiyin))
 ```
 And i am developing this to improve my manim animation skills
-<br>
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=VectorZhouu&layout=compact)](https://github.com/anuraghazra/github-readme-stats)
-<br>
 ![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=VectorZhouu)
 
 
