@@ -8,8 +8,7 @@
 
 ![Typing SVG](https://readme-typing-svg.demolab.com/?lines=你在看什么;—+_+—;~+_+~;)
 <br>
-![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=VectorZhouu&show_icons=true&theme=holi)
-<br>
+
 ![GitHub Streak](https://streak-stats.demolab.com/?user=VectorZhouu)
 <br>
 ![暗色](https://raw.githubusercontent.com/VectorZhouu/VectorZhouu/output/github-contribution-grid-snake-dark.svg)
